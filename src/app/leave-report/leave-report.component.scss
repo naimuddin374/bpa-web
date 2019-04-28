@@ -1,0 +1,39 @@
+table {
+    width: 100%;
+}
+
+// .mat-form-field {
+//     text-align: right;
+//     font-size: 16px;
+//     width: 15%;
+// }
+.text-hide {
+    white-space: nowrap;
+    width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.mat-card {
+    border-radius: 0;
+}
+
+.width10 {
+    width: 15%;
+}
+
+.month-picker .mat-calendar-period-button {
+    pointer-events: none;
+}
+
+.month-picker .mat-calendar-arrow {
+    display: none;
+}
+
+.leave-report {
+    text-align: right;
+    .mat-form-field[_ngcontent-c10] {
+        font-size: 16px;
+        width: 10%;
+    }
+}

@@ -1,0 +1,70 @@
+<h1 mat-dialog-title>{{data.action}} User</h1>
+<div mat-dialog-content>
+    <form *ngIf="form" [formGroup]="form" class="form-container">
+
+        <mat-form-field>
+            <mat-select formControlName="dptId" (ngModelChange)="changeDepartment($event)">
+                <mat-option value="" disabled="true">- Choose Department -</mat-option>
+                <mat-option *ngFor="let e of departments;" [value]="e?.id"> {{e?.department}} </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-select formControlName="empId">
+                <mat-option value="" disabled="true">- Choose Employee -</mat-option>
+                <mat-option *ngFor="let e of employees;" [value]="e?.id"> {{e?.first_name}} {{e?.last_name}} </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-select formControlName="roleId">
+                <mat-option value="" disabled="true">- Choose Role -</mat-option>
+                <mat-option *ngFor="let r of roles;" [value]="r.id"> {{r?.role}} </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+
+        <mat-form-field>
+            <input type="email" matInput formControlName="email" placeholder="Email" required />
+            <mat-error *ngIf="( form.get('email').hasError('required') ) && form.get('email').touched">
+                <span class="error" *ngIf="form.get('email').hasError('required') || form.get('email').touched">
+          You must enter a value
+        </span>
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field *ngIf="data.action == 'Add'">
+            <input type="password" matInput formControlName="password1" placeholder="Password" required />
+            <mat-error *ngIf="( form.get('password1').hasError('required') ) && form.get('password1').touched">
+                <span class="error" *ngIf="form.get('password1').hasError('required') || form.get('password1').touched">
+          You must enter a value
+        </span>
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field *ngIf="data.action == 'Add'">
+            <input type="password" matInput formControlName="password2" placeholder="Confirm Password" required (keyup)="onKey($event)" />
+            <mat-error *ngIf="( form.get('password2').hasError('required') ) && form.get('password2').touched">
+                <span class="error" *ngIf="form.get('password2').hasError('required') || form.get('password2').touched">
+          You must enter a value
+        </span>
+            </mat-error>
+        </mat-form-field>
+
+
+        <mat-form-field>
+            <mat-select formControlName="status">
+                <mat-option value="" disabled="true">- Choose Status -</mat-option>
+                <mat-option value='1'> Active </mat-option>
+                <mat-option value='0'> Deactive </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+    </form>
+</div>
+<div mat-dialog-actions class="button-row">
+    <button mat-stroked-button (click)="onNoClick()" cdkFocusInitial>No Thanks</button>
+    <button mat-stroked-button color="primary" *ngIf="!isDone" [disabled]="true">Wait ...</button>
+    <button mat-stroked-button color="primary" *ngIf="data.action == 'Add' && isDone" [disabled]="!isReadyToSave" (click)="add()">Add</button>
+    <button mat-stroked-button color="primary" *ngIf="data.action == 'Edit' && isDone" [disabled]="!isReadyToSave" (click)="edit()">Update</button>
+</div>

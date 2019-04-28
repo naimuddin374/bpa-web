@@ -1,0 +1,72 @@
+<div class="container">
+    <h3>Employee Information</h3>
+    <div class="rowDiv">
+        <div class="imageDiv" *ngIf="files">
+            <img src="{{files}}" width="250" alt="Profile Image">
+        </div>
+    </div>
+    <br>
+    <hr>
+    <table>
+        <tr>
+            <td><strong>Full Name:</strong> {{empData['first_name']}} {{empData['last_name']}}</td>
+            <td><strong>Department:</strong> {{empData['department']}}</td>
+        </tr>
+        <tr>
+            <td><strong>Email:</strong> {{empData['email']}}</td>
+            <td><strong>Designation:</strong> {{empData['designation']}}</td>
+        </tr>
+        <tr>
+            <td><strong>Contact Number:</strong> {{empData['contact']}}</td>
+            <td><strong>Supervisor:</strong> {{empData['supervisor_first_name']}} {{empData['supervisor_last_name']}}</td>
+        </tr>
+        <tr>
+            <td><strong>Address:</strong> {{empData['address']}}</td>
+            <td><strong>Employee ID:</strong> {{empData['code']}}</td>
+        </tr>
+        <tr>
+            <td><strong>Date of Birth:</strong> {{empData['dob']}}</td>
+            <td><strong>Total Casual Leave:</strong> {{empData['casual_leave']}}</td>
+        </tr>
+        <tr>
+            <td><strong>Name of Emergency Contact Person:</strong> {{empData['emr_cnt_name']}}</td>
+            <td><strong>Remain Casual Leave:</strong> {{empData['casual_leave_remain']}}</td>
+        </tr>
+        <tr>
+            <td><strong>Number of Emergency Contact Person:</strong> {{empData['emr_cnt_phone']}}</td>
+            <td><strong>Total Sick Leave:</strong> {{empData['sick_leave']}}</td>
+        </tr>
+        <tr>
+            <td><strong>Relationship With Emergency Contact Person:</strong> {{empData['emr_cnt_relation']}}</td>
+            <td><strong>Remain Sick Leave:</strong> {{empData['sick_leave_remain']}}</td>
+        </tr>
+        <tr>
+            <td><strong>Blood Group:</strong> {{empData['blood_group']}}</td>
+            <td><strong>Salary:</strong> {{empData['salary']}}</td>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+            <td><strong>Employee Type:</strong> {{empData['category']}}</td>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+            <td><strong>AAI:</strong> {{empData['aai']}}</td>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+            <td><strong>Probation Period End:</strong> {{empData['provision_period_end']}}</td>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+            <td><strong>Joining Date:</strong> {{empData['joining']}}</td>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+            <td><strong>Status:</strong>
+                <span *ngIf="empData['status']==1">Current</span>
+                <span *ngIf="empData['status']==2">Former</span>
+            </td>
+        </tr>
+    </table>
+
+</div>

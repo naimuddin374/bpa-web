@@ -1,0 +1,44 @@
+<h1 mat-dialog-title>Assign Asset To User</h1>
+<div mat-dialog-content>
+    <form *ngIf="form" [formGroup]="form" class="form-container">
+
+        <mat-form-field>
+            <mat-select formControlName="catId" (ngModelChange)="changeCategory($event)">
+                <mat-option value="" disabled="true">- Choose Asset Category -</mat-option>
+                <mat-option *ngFor="let c of categories;" [value]="c?.id"> {{c?.category}} </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-select formControlName="assetId" (ngModelChange)="changeAsset($event)">
+                <mat-option value="" disabled="true">- Choose Asset -</mat-option>
+                <mat-option *ngFor="let a of assets;" [value]="a?.id"> {{a?.title}} </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+            <input type="text" matInput formControlName="assetCode" placeholder="Asset Code" [readonly]="true" />
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-select formControlName="dptId" (ngModelChange)="changeDepartment($event)">
+                <mat-option value="" disabled="true">- Choose Department -</mat-option>
+                <mat-option *ngFor="let d of departments;" [value]="d?.id"> {{d?.department}} </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-select formControlName="empId">
+                <mat-option value="" disabled="true">- Choose Employee -</mat-option>
+                <mat-option *ngFor="let e of employees;" [value]="e?.id"> {{e?.first_name}} {{e?.last_name}} </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+    </form>
+</div>
+<div mat-dialog-actions class="button-row">
+    <button mat-stroked-button (click)="onNoClick()" cdkFocusInitial>No Thanks</button>
+    <button mat-stroked-button color="primary" *ngIf="!isDone" [disabled]="true">Wait ...</button>
+    <button mat-stroked-button color="primary" *ngIf="data.action == 'Add' && isDone" [disabled]="!isReadyToSave" (click)="add()">Add</button>
+    <button mat-stroked-button color="primary" *ngIf="data.action == 'Edit' && isDone" [disabled]="!isReadyToSave" (click)="edit()">Update</button>
+</div>

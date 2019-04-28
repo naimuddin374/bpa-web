@@ -1,0 +1,117 @@
+<div style="text-align: right">
+    <button mat-raised-button color="primary" (click)="add()" [disabled]="leavePending == false">
+    <mat-icon aria-label="icon">create</mat-icon> Apply For Leave
+  </button>
+</div>
+<br />
+
+<div class="mat-elevation-z8">
+    <div *ngIf="isLoading && !isEmpty">
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    </div>
+
+    <table mat-table [dataSource]="list" matSort class="mat-elevation-z8">
+        <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef> No. </th>
+            <td mat-cell *matCellDef="let e; let i = index;"> {{i + 1}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="fullName">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Full Name</th>
+            <td mat-cell *matCellDef="let e">
+                <div>{{e.first_name}} {{e.last_name}}</div>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="empId">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Employee ID </th>
+            <td mat-cell *matCellDef="let e">
+                <div>{{e.code}}</div>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="department">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Department </th>
+            <td mat-cell *matCellDef="let e">
+                <div>{{e.department}}</div>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="leave_type">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Type </th>
+            <td mat-cell *matCellDef="let e">
+                <div>{{e.leave_type}}</div>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="purpose">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Purpose </th>
+            <td mat-cell *matCellDef="let e">
+                <div>{{e.purpose}}</div>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="leave_from">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Leave From </th>
+            <td mat-cell *matCellDef="let e">
+                <div>{{e.leave_from}}</div>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="leave_to">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Leave To </th>
+            <td mat-cell *matCellDef="let e">
+                <div>{{e.leave_to}}</div>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="total_day">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Total Day </th>
+            <td mat-cell *matCellDef="let e">
+                <div>{{e.total_day}}</div>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="supervisor_approval">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Supervisor Approval </th>
+            <td mat-cell *matCellDef="let e">
+                <div *ngIf="e.supervisor_approval == 0" style="color: rgb(255, 166, 0)">Waiting</div>
+                <div *ngIf="e.supervisor_approval == 1" style="color: rgb(255, 30, 0)">Rejected</div>
+                <div *ngIf="e.supervisor_approval == 2" style="color: rgb(0, 119, 255)">Approved</div>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="hr_approval">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> HR Approval </th>
+            <td mat-cell *matCellDef="let e">
+                <div *ngIf="e.hr_approval == 0" style="color: rgb(255, 166, 0)">Waiting</div>
+                <div *ngIf="e.hr_approval == 1" style="color: rgb(255, 30, 0)">Rejected</div>
+                <div *ngIf="e.hr_approval == 2" style="color: rgb(0, 119, 255)">Approved</div>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="created_at">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Applicant Date </th>
+            <td mat-cell *matCellDef="let e">
+                <div>{{e.created_at | date:'fullDate'}}</div>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="action">
+            <th mat-header-cell *matHeaderCellDef> Action </th>
+            <td mat-cell *matCellDef="let e">
+                <button mat-icon-button color="primary" (click)="edit(e)" [disabled]="e.supervisor_approval == 2 && e.hr_approval == 2">
+          <mat-icon aria-label="icon">edit</mat-icon>
+        </button>
+                <button mat-icon-button color="warn" (click)="delete(e.id)" *ngIf="isDelete && e.supervisor_approval == 0 && e.hr_approval == 0">
+          <mat-icon aria-label="icon">delete</mat-icon>
+        </button>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <mat-card *ngIf="isEmpty" style="text-align: center">You have no application.</mat-card>
+    <mat-paginator [pageSizeOptions]="[10, 20, 25]" showFirstLastButtons></mat-paginator>
+</div>

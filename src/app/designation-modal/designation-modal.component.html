@@ -1,0 +1,20 @@
+<h1 mat-dialog-title>{{data.action}} Designation</h1>
+<div mat-dialog-content>
+    <form *ngIf="form" [formGroup]="form" class="form-container">
+        <mat-form-field>
+            <input type="text" matInput formControlName="designation" placeholder="Designation" required />
+            <mat-error *ngIf="( form.get('designation').hasError('required') ) && form.get('designation').touched">
+                <span class="error" *ngIf="form.get('designation').hasError('required') || form.get('designation').touched">
+          You must enter a value
+        </span>
+            </mat-error>
+        </mat-form-field>
+
+    </form>
+</div>
+<div mat-dialog-actions class="button-row">
+    <button mat-stroked-button (click)="onNoClick()" cdkFocusInitial>No Thanks</button>
+    <button mat-stroked-button color="primary" *ngIf="!isDone" [disabled]="true">Wait ...</button>
+    <button mat-stroked-button color="primary" *ngIf="data.action == 'Add' && isDone" [disabled]="!isReadyToSave" (click)="add()">Add</button>
+    <button mat-stroked-button color="primary" *ngIf="data.action == 'Edit' && isDone" [disabled]="!isReadyToSave" (click)="edit()">Update</button>
+</div>

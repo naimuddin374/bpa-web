@@ -1,0 +1,46 @@
+.form-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-container>* {
+    width: 100%;
+}
+
+.button-row {
+    float: right;
+    a,
+    button {
+        margin-right: 8px;
+    }
+}
+
+.image-wrapper {
+    text-align: center;
+    /* margin: 10px 0; */
+    .image {
+        width: 200px;
+        height: 200px;
+        border-radius: 0;
+        display: inline-block;
+        background-size: 105px 105px;
+        background: no-repeat center;
+    }
+    .image-placeholder {
+        display: inline-block;
+        background-color: #eee;
+        width: 300px;
+        height: 250px;
+        border-radius: 0;
+        font-size: 12px;
+    }
+    .text-block {
+        margin-top: 88px;
+        font-weight: 600;
+        text-transform: uppercase;
+    }
+}
+
+.error {
+    color: brown;
+}

@@ -1,0 +1,194 @@
+<h1 mat-dialog-title>{{data.action}} Employee</h1>
+<div mat-dialog-content>
+    <form *ngIf="form" [formGroup]="form" class="form-container">
+        <input type="file" #fileInput style="visibility: hidden; height: 0" name="files[]" (change)="processWebImage($event)" accept="image/*" />
+        <div class="image-wrapper" (click)="getImage()">
+            <div class="image-placeholder" *ngIf="!this.form.controls.image.value">
+                <div class="text-block"> Product Image <br> (Max 500 KB) </div>
+            </div>
+            <img class="image" [style.backgroundImage]="getImageStyle()" *ngIf="this.form.controls.image.value" />
+        </div>
+
+        <mat-form-field>
+            <mat-select formControlName="departmentId">
+                <mat-option value="" disabled="true">- Choose Department -</mat-option>
+                <mat-option *ngFor="let d of departments;" [value]="d.id"> {{d?.department}} </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-select formControlName="supervisorId">
+                <mat-option value="" disabled="true">- Choose Supervisor -</mat-option>
+                <mat-option *ngFor="let s of supervisor;" [value]="s?.supervisor_id"> {{s?.first_name}} {{s?.last_name}} </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-select formControlName="designationId">
+                <mat-option value="" disabled="true">- Choose Designation -</mat-option>
+                <mat-option *ngFor="let d of designations;" [value]="d?.id"> {{d?.designation}} </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-select formControlName="category">
+                <mat-option value="" disabled="true">- Choose Category -</mat-option>
+                <mat-option value='Permanent'> Permanent </mat-option>
+                <mat-option value='Contract'> Contract </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-select formControlName="type">
+                <mat-option value="" disabled="true">- Choose Type -</mat-option>
+                <mat-option value='full_time'> Full Time </mat-option>
+                <mat-option value='part_time'> Part Time </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-select formControlName="status">
+                <mat-option value="" disabled="true">- Choose Status -</mat-option>
+                <mat-option value='1'> Current </mat-option>
+                <mat-option value='2'> Former </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+            <input type="text" matInput formControlName="code" placeholder="Employee ID" />
+        </mat-form-field>
+
+        <mat-form-field>
+            <input type="text" matInput formControlName="firstName" placeholder="First Name" required />
+            <mat-error *ngIf="( form.get('firstName').hasError('required') ) && form.get('firstName').touched">
+                <span class="error" *ngIf="form.get('firstName').hasError('required') || form.get('firstName').touched">
+          You must enter a value
+        </span>
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <input type="text" matInput formControlName="lastName" placeholder="Last Name" required />
+            <mat-error *ngIf="( form.get('lastName').hasError('required') ) && form.get('lastName').touched">
+                <span class="error" *ngIf="form.get('lastName').hasError('required') || form.get('lastName').touched">
+          You must enter a value
+        </span>
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <input type="email" matInput formControlName="email" placeholder="Email" required />
+            <mat-error *ngIf="( form.get('email').hasError('required') ) && form.get('email').touched">
+                <span class="error" *ngIf="form.get('email').hasError('required') || form.get('email').touched">
+          You must enter a value
+        </span>
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <input type="text" matInput formControlName="contact" placeholder="Contact" required />
+            <mat-error *ngIf="( form.get('contact').hasError('required') ) && form.get('contact').touched">
+                <span class="error" *ngIf="form.get('contact').hasError('required') || form.get('contact').touched">
+          You must enter a value
+        </span>
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <input type="text" matInput formControlName="address" placeholder="Address" required />
+            <mat-error *ngIf="( form.get('address').hasError('required') ) && form.get('address').touched">
+                <span class="error" *ngIf="form.get('address').hasError('required') || form.get('address').touched">
+          You must enter a value
+        </span>
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <input type="number" matInput formControlName="sickLeave" placeholder="Sick Leave" required />
+            <mat-error *ngIf="( form.get('sickLeave').hasError('required') ) && form.get('sickLeave').touched">
+                <span class="error" *ngIf="form.get('sickLeave').hasError('required') || form.get('sickLeave').touched">
+          You must enter a value
+        </span>
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <input type="number" matInput formControlName="casualLeave" placeholder="Casual Leave" required />
+            <mat-error *ngIf="( form.get('casualLeave').hasError('required') ) && form.get('casualLeave').touched">
+                <span class="error" *ngIf="form.get('casualLeave').hasError('required') || form.get('casualLeave').touched">
+          You must enter a value
+        </span>
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <input type="number" matInput formControlName="otherLeave" placeholder="Other Leave" />
+        </mat-form-field>
+
+        <mat-form-field>
+            <input type="text" matInput [matDatepicker]="picker1" formControlName="joining" placeholder="Joining Date">
+            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+            <mat-datepicker #picker1></mat-datepicker>
+            <mat-error *ngIf="( form.get('joining').hasError('required') ) && form.get('joining').touched">
+                <span class="error" *ngIf="form.get('joining').hasError('required') || form.get('joining').touched">
+          You must enter a value
+        </span>
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <input type="text" matInput [matDatepicker]="picker2" formControlName="provisionPeriodEnd" placeholder="Provision Period End Date">
+            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+            <mat-datepicker #picker2></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field>
+            <input type="text" matInput [matDatepicker]="picker3" formControlName="dob" placeholder="Date of Birth">
+            <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+            <mat-datepicker #picker3></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field>
+            <input type="number" matInput formControlName="salary" placeholder="Salary" required />
+            <mat-error *ngIf="( form.get('salary').hasError('required') ) && form.get('salary').touched">
+                <span class="error" *ngIf="form.get('salary').hasError('required') || form.get('salary').touched">
+      You must enter a value
+    </span>
+            </mat-error>
+        </mat-form-field>
+
+
+        <mat-form-field>
+            <mat-select formControlName="bloodGroup">
+                <mat-option value="" disabled="true">- Choose Blood Group -</mat-option>
+                <mat-option value='A+'> A+ </mat-option>
+                <mat-option value='O+'> O+ </mat-option>
+                <mat-option value='B+'> B+ </mat-option>
+                <mat-option value='AB+'> AB+ </mat-option>
+                <mat-option value='A-'> A- </mat-option>
+                <mat-option value='O-'> O- </mat-option>
+                <mat-option value='B-'> B- </mat-option>
+                <mat-option value='AB-'> AB- </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+            <input type="text" matInput formControlName="emrCntName" placeholder="Name of Emergency Contact Person" />
+        </mat-form-field>
+
+        <mat-form-field>
+            <input type="number" matInput formControlName="emrCntPhone" placeholder="Number of Emergency Contact Person" />
+        </mat-form-field>
+
+        <mat-form-field>
+            <input type="text" matInput formControlName="emrCntRelation" placeholder="Relationship With Emergency Contact Person" />
+        </mat-form-field>
+
+    </form>
+</div>
+<div mat-dialog-actions class="button-row">
+    <button mat-stroked-button (click)="onNoClick()" cdkFocusInitial>No Thanks</button>
+    <button mat-stroked-button color="primary" *ngIf="!isDone" [disabled]="true">Wait ...</button>
+    <button mat-stroked-button color="primary" *ngIf="data.action == 'Add' && isDone" [disabled]="!isReadyToSave" (click)="add()">Add</button>
+    <button mat-stroked-button color="primary" *ngIf="data.action == 'Edit' && isDone" [disabled]="!isReadyToSave" (click)="edit()">Update</button>
+</div>

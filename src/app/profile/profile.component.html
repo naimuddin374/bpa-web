@@ -1,0 +1,86 @@
+<div class="mat-elevation-z8">
+    <div *ngIf="isLoading && !isEmpty">
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    </div>
+    <div class="container">
+        <mat-card *ngIf="isEmpty" style="text-align: center">No data found!</mat-card>
+
+        <h3>Personal Information</h3>
+        <div class="rowDiv">
+            <div class="imageDiv leftDiv" *ngIf="image">
+                <img src="{{image}}" width="250" alt="Image">
+            </div>
+            <div style="text-align: right">
+                <button mat-raised-button color="primary" (click)="edit()">
+          <mat-icon aria-label="icon">edit</mat-icon> Edit Profile
+        </button>
+            </div>
+            <br />
+
+            <table>
+                <tr>
+                    <td><strong>Full Name: </strong> {{profile['first_name']}} {{profile['last_name']}}</td>
+                    <td><strong>Employee ID: </strong> {{profile['code']}}</td>
+
+                </tr>
+                <tr>
+                    <td><strong>Personal Email: </strong> {{profile['email']}}</td>
+                    <td><strong>Department: </strong> {{profile['department']}}</td>
+
+                </tr>
+
+                <tr>
+                    <td><strong>Contact Number: </strong> {{profile['contact']}}</td>
+                    <td><strong>Designation: </strong> {{profile['designation']}}</td>
+
+                </tr>
+
+                <tr>
+                    <td><strong>Address: </strong> {{profile['address']}}</td>
+                    <td><strong>Supervisor: </strong> {{profile['supervisor']}}</td>
+                </tr>
+
+                <tr>
+                    <td><strong>Date of Birth: </strong> {{profile['dob']}}</td>
+                    <td><strong>Official Email: </strong> {{profile['email']}}</td>
+                </tr>
+
+                <tr>
+                    <td><strong>Blood Group: </strong> {{profile['blood_group']}}</td>
+                    <td><strong>Casual Leave: </strong> {{profile['casual_leave']}}</td>
+                </tr>
+
+                <tr>
+                    <td><strong>Joining Date: </strong> {{profile['joining']}}</td>
+                    <td><strong>Sick Leave: </strong> {{profile['sick_leave']}}</td>
+                </tr>
+
+                <tr>
+                    <td>&nbsp;</td>
+                    <td><strong>Provision Period End: </strong> {{profile['provision_period_end']}}</td>
+                </tr>
+
+                <tr>
+                    <td>&nbsp;</td>
+                    <td>
+                        <strong>Employee Type: </strong>
+                        <span *ngIf="profile['type'] == 'part_time'">Part Time</span>
+                        <span *ngIf="profile['type'] == 'full_time'">Full Time</span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>&nbsp;</td>
+                    <td><strong>Role: </strong> {{profile['role']}}</td>
+                </tr>
+
+                <tr>
+                    <td>&nbsp;</td>
+                    <td><strong>Employee Status: </strong>
+                        <span *ngIf="profile['status'] == 1">Current</span>
+                        <span *ngIf="profile['status'] == 2">Former</span></td>
+                </tr>
+
+            </table>
+        </div>
+    </div>

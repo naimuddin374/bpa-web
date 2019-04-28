@@ -1,0 +1,19 @@
+<div *ngIf="leaveData[0]">
+    <p><b>Name: </b> {{leaveData[0]?.first_name}} {{leaveData[0]?.last_name}}</p>
+    <p><b>Department: </b>{{leaveData[0]?.department}}</p>
+    <p><b>Employee ID: </b>{{leaveData[0]?.code}}</p>
+</div>
+<div mat-dialog-content>
+    <div *ngFor="let e of leaveData;">
+        <hr>
+        <p><b>Leave Type: </b>{{e.leave_type}}</p>
+        <p><b>Purpose: </b>{{e.purpose}}</p>
+        <p><b>Leave From: </b>{{e.leave_from}}</p>
+        <p><b>Leave To: </b>{{e.leave_to}}</p>
+        <p><b>Total Day: </b>{{e.total_day}}</p>
+        <p><b>Applicant Date: </b>{{e.created_at}}</p>
+    </div>
+</div>
+<div mat-dialog-actions class="button-row">
+    <button mat-stroked-button (click)="onNoClick()" cdkFocusInitial>Close</button>
+</div>

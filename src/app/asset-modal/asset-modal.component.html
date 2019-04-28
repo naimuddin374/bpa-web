@@ -1,0 +1,88 @@
+<h1 mat-dialog-title>{{data.action}} Asset</h1>
+<div mat-dialog-content>
+    <form *ngIf="form" [formGroup]="form" class="form-container">
+
+        <mat-form-field>
+            <mat-select formControlName="categoryId">
+                <mat-option value="" disabled="true">- Choose Category -</mat-option>
+                <mat-option *ngFor="let c of categoreris;" [value]="c?.id"> {{c?.category}} </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+            <input type="text" matInput formControlName="companyName" placeholder="Company Name" />
+        </mat-form-field>
+
+        <mat-form-field>
+            <input type="text" matInput formControlName="code" placeholder="Code" />
+        </mat-form-field>
+
+        <mat-form-field>
+            <input type="text" matInput formControlName="title" placeholder="Title" required />
+            <mat-error *ngIf="( form.get('title').hasError('required') ) && form.get('title').touched">
+                <span class="error" *ngIf="form.get('title').hasError('required') || form.get('title').touched">
+          You must enter a value
+        </span>
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <textarea matInput formControlName="description" placeholder="Description"></textarea>
+        </mat-form-field>
+
+        <mat-form-field>
+            <input type="number" matInput formControlName="price" placeholder="Price" />
+        </mat-form-field>
+
+        <mat-form-field>
+            <input type="text" matInput formControlName="fromBuy" placeholder="From Buy" />
+        </mat-form-field>
+
+        <mat-form-field>
+            <input type="text" matInput [matDatepicker]="picker1" formControlName="purchaseDate" placeholder="Purchase Date">
+            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+            <mat-datepicker #picker1></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field>
+            <input type="text" matInput [matDatepicker]="picker2" formControlName="warranty" placeholder="Warranty Expiration Date">
+            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+            <mat-datepicker #picker2></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field>
+            <textarea matInput formControlName="note" placeholder="Take Note"></textarea>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-select formControlName="status">
+                <mat-option value="" disabled="true">- Choose Status -</mat-option>
+                <mat-option value='Active'> Active </mat-option>
+                <mat-option value='Deactive'> Deactive </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <br> Employee Details
+        <hr>
+        <mat-form-field>
+            <mat-select formControlName="empId" (ngModelChange)="changeEmployee($event)">
+                <mat-option value="" disabled="true">- Choose Employee -</mat-option>
+                <mat-option *ngFor="let e of employees;" [value]="e?.id"> {{e?.first_name}} {{e?.last_name}} </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+            <input type="text" matInput formControlName="departmentName" placeholder="Department" [readonly]="true" />
+        </mat-form-field>
+
+        <mat-form-field>
+            <input type="text" matInput formControlName="designationName" placeholder="Designation" [readonly]="true" />
+        </mat-form-field>
+
+    </form>
+</div>
+<div mat-dialog-actions class="button-row">
+    <button mat-stroked-button (click)="onNoClick()" cdkFocusInitial>No Thanks</button>
+    <button mat-stroked-button color="primary" *ngIf="!isDone" [disabled]="true">Wait ...</button>
+    <button mat-stroked-button color="primary" *ngIf="data.action == 'Add' && isDone" [disabled]="!isReadyToSave" (click)="add()">Add</button>
+    <button mat-stroked-button color="primary" *ngIf="data.action == 'Edit' && isDone" [disabled]="!isReadyToSave" (click)="edit()">Update</button>
+</div>

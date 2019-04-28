@@ -1,0 +1,90 @@
+<header class="nav">
+    <mat-toolbar color="primary">
+        <mat-toolbar-row>
+            <button *ngIf="isLoggedIn" aria-label="Toggle sidenav" mat-icon-button (click)="toggleDrawer()">
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+            <span class="logo"><a routerLink='/'><img src="./assets/nav-logo.png"></a></span>Business Paperless Automation
+            <span class="spacer"></span>
+            <div *ngIf="isLoggedIn">
+                <button mat-button>{{full_name}}</button>
+                <button mat-icon-button [matMenuTriggerFor]="menu">
+          <span class="spacer"></span>
+          <mat-icon class="icon">more_vert</mat-icon>
+        </button>
+                <mat-menu #menu="matMenu">
+                    <button mat-menu-item (click)="goToProfile()">
+            <mat-icon class="icon">person</mat-icon>
+            <span>Profile</span>
+          </button>
+                    <button mat-menu-item (click)="changePassword()">
+            <mat-icon class="icon">lock</mat-icon>
+            <span>Change Password</span>
+          </button>
+                    <button mat-menu-item (click)="logout()">
+            <mat-icon class="icon">exit_to_app</mat-icon>
+            <span>Logout</span>
+          </button>
+                </mat-menu>
+            </div>
+        </mat-toolbar-row>
+    </mat-toolbar>
+    <mat-sidenav-container class="container" *ngIf="isLoggedIn" autosize>
+        <mat-sidenav #drawer mode="side" opened role="navigation">
+
+            <!-- <mat-divider *ngIf="isAuthorized('department')"></mat-divider>
+            <mat-nav-list *ngIf="isAuthorized('department')">
+                <a mat-list-item routerLink='/department' routerLinkActive="is-active"><i class="material-icons"> apps </i>
+          Department</a>
+            </mat-nav-list> -->
+
+            <mat-divider *ngIf="isAuthorized('home')"></mat-divider>
+            <mat-nav-list *ngIf="isAuthorized('home')">
+                <a mat-list-item routerLink='/home'><i class="material-icons"> dashboard </i>Dashboard</a>
+            </mat-nav-list>
+
+            <button class="left-menu-item-full-width" *ngIf="isAuthorized('leave')" mat-button [matMenuTriggerFor]="leave"><i
+          class="material-icons">note_add</i>
+        Leave Management</button>
+            <mat-menu #leave="matMenu">
+                <button mat-menu-item routerLink='/leave'>Application For Leave</button>
+                <button mat-menu-item routerLink='/leave-report'>Leave Report</button>
+            </mat-menu>
+            <mat-divider></mat-divider>
+
+            <button *ngIf="isAuthorized('employee')" class="left-menu-item-full-width" mat-button [matMenuTriggerFor]="employee"><i
+          class="material-icons">perm_identity</i>
+        Employee Management</button>
+            <mat-menu #employee="matMenu">
+                <button mat-menu-item routerLink='/employee'>List of Employee</button>
+                <button mat-menu-item routerLink='/designation'>List of Designations</button>
+                <button mat-menu-item routerLink='/department'>List of Departments</button>
+            </mat-menu>
+            <mat-divider></mat-divider>
+
+            <button *ngIf="isAuthorized('user')" class="left-menu-item-full-width" mat-button [matMenuTriggerFor]="user"><i
+          class="material-icons">account_box</i>
+        User Management</button>
+            <mat-menu #user="matMenu" class="left-sub-menu">
+                <button mat-menu-item routerLink='/user'>List of Users</button>
+                <button mat-menu-item routerLink='/role'>List of Roles</button>
+            </mat-menu>
+            <mat-divider></mat-divider>
+
+            <button *ngIf="isAuthorized('category')" class="left-menu-item-full-width" mat-button [matMenuTriggerFor]="asset"><i
+          class="material-icons">settings</i>
+        Asset
+        Management</button>
+            <mat-menu #asset="matMenu" class="left-sub-menu">
+                <button mat-menu-item routerLink='/assign-asset'>Assign Asset</button>
+                <button mat-menu-item routerLink='/asset'>Asset</button>
+                <button mat-menu-item routerLink='/category'>Category</button>
+            </mat-menu>
+            <mat-divider></mat-divider>
+
+        </mat-sidenav>
+        <mat-sidenav-content class="content">
+            <router-outlet></router-outlet>
+        </mat-sidenav-content>
+    </mat-sidenav-container>
+</header>

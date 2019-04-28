@@ -1,0 +1,77 @@
+<h1 mat-dialog-title>Leave Application</h1>
+<div mat-dialog-content>
+    <div style="width: 100%; font-size: small;">
+        <div style="width: 33.33%; float: left; text-align: center;"><strong><u>Sick</u></strong> Total: {{leave?.sick_leave}} | Remain: {{leave?.sick_leave_remain}}
+        </div>
+        <div style="width: 33.33%; float: left; text-align: center;"><strong><u>Casual</u></strong> Total: {{leave?.casual_leave}} | Remain: {{leave?.casual_leave_remain}}
+        </div>
+        <div style="width: 33.33%; float: left; text-align: center;"><strong><u>Other</u></strong> Total: {{leave?.other_leave}} | Remain: {{leave?.other_leave_remain}}
+        </div>
+    </div>
+    <br />
+    <br />
+    <mat-divider></mat-divider>
+    <br />
+    <form *ngIf="form" [formGroup]="form" class="form-container">
+        <mat-form-field>
+            <mat-select formControlName="leaveType">
+                <mat-option value="" disabled="true">- Choose Type -</mat-option>
+                <mat-option value='Casual' [disabled]="data.action == 'Edit' || leave?.casual_leave_remain === 0"> Casual
+                </mat-option>
+                <mat-option value='Sick' [disabled]="data.action == 'Edit' || leave?.sick_leave_remain === 0"> Sick
+                </mat-option>
+                <mat-option value='Other' [disabled]="data.action == 'Edit' || (leave?.other_leave_remain === 0 || !leave?.other_leave_remain)">
+                    Other
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+            <textarea matInput formControlName="purpose" placeholder="Purpose" required [readonly]="data.action == 'Edit'"></textarea>
+            <mat-error *ngIf="( form.get('purpose').hasError('required') ) && form.get('purpose').touched">
+                <span class="error" *ngIf="form.get('purpose').hasError('required') || form.get('purpose').touched">
+          You must enter a value
+        </span>
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <input type="text" matInput [matDatepicker]="picker1" formControlName="leaveFrom" placeholder="Leave From" required [readonly]="data.action == 'Edit'">
+            <mat-datepicker-toggle matSuffix [for]="picker1" *ngIf="data.action == 'Add'"></mat-datepicker-toggle>
+            <mat-datepicker #picker1></mat-datepicker>
+            <mat-error *ngIf="( form.get('leaveFrom').hasError('required') ) && form.get('leaveFrom').touched">
+                <span class="error" *ngIf="form.get('leaveFrom').hasError('required') || form.get('leaveFrom').touched">
+          You must enter a value
+        </span>
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <input type="text" matInput [matDatepicker]="picker2" [min]="form.value.leaveFrom" formControlName="leaveTo" (ngModelChange)="setTotalDay()" placeholder="Leave To" required [readonly]="data.action == 'Edit' || !form.value.leaveFrom">
+            <mat-datepicker-toggle matSuffix [for]="picker2" *ngIf="data.action == 'Add'" [disabled]="!form.value.leaveFrom"></mat-datepicker-toggle>
+            <mat-datepicker #picker2></mat-datepicker>
+            <mat-error *ngIf="( form.get('leaveTo').hasError('required') ) && form.get('leaveTo').touched">
+                <span class="error" *ngIf="form.get('leaveTo').hasError('required') || form.get('leaveTo').touched">
+          You must enter a value
+        </span>
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <input type="number" matInput formControlName="totalDay" placeholder="Total Day" [readonly]="true" />
+        </mat-form-field>
+
+        <mat-radio-group formControlName="isApproved" *ngIf="data.action == 'Edit' && isShowApprove">
+            Is Approved? &nbsp;
+            <mat-radio-button color="accent" value="0">Pending</mat-radio-button> &nbsp;
+            <mat-radio-button color="warn" value="1">Rejected</mat-radio-button> &nbsp;
+            <mat-radio-button color="primary" value="2">Approved</mat-radio-button>
+        </mat-radio-group>
+    </form>
+</div>
+<div mat-dialog-actions class="button-row">
+    <button mat-stroked-button (click)="onNoClick()" cdkFocusInitial>No Thanks</button>
+    <button mat-stroked-button color="primary" *ngIf="!isDone" [disabled]="true">Wait ...</button>
+    <button mat-stroked-button color="primary" *ngIf="data.action == 'Add' && isDone" [disabled]="!isReadyToSave" (click)="add()">Add</button>
+    <button mat-stroked-button color="primary" *ngIf="data.action == 'Edit' && isDone" [disabled]="!isReadyToSave" (click)="edit()">Update</button>
+</div>

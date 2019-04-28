@@ -1,0 +1,44 @@
+<div class="login-container">
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>Login</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <form *ngIf="form" [formGroup]="form" class="form">
+                <table class="full-width" cellspacing="0">
+                    <tr>
+                        <td>
+                            <mat-form-field class="full-width">
+                                <input matInput type="email" formControlName="email" placeholder="Email" required />
+                                <mat-error *ngIf="( form.get('email').hasError('required') ) && form.get('email').touched">
+                                    <span class="error" *ngIf="form.get('email').hasError('required') || form.get('email').touched">
+                    You must enter a value
+                  </span>
+                                </mat-error>
+                            </mat-form-field>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <mat-form-field class="full-width">
+                                <input matInput type="password" formControlName="password" placeholder="Password" required />
+                                <mat-error *ngIf="( form.get('password').hasError('required') ) && form.get('password').touched">
+                                    <span class="error" *ngIf="form.get('password').hasError('required') || form.get('password').touched">
+                    You must enter a value
+                  </span>
+                                </mat-error>
+                            </mat-form-field>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+
+        </mat-card-content>
+        <mat-card-actions>
+            <button mat-stroked-button color="primary" *ngIf="loading" [disabled]="true">Wait ...</button>
+            <button mat-raised-button color="primary" (click)="login()" *ngIf="!loading" [disabled]="!isReadyToSave">Login</button>
+
+            <a class="forgot-password-btn" (click)="forgotPassword()">Forgot password?</a>
+        </mat-card-actions>
+    </mat-card>
+</div>

@@ -1,0 +1,64 @@
+<!-- <h1 mat-dialog-title>{{data.action}} Category</h1> -->
+<div mat-dialog-content>
+    <form *ngIf="form" [formGroup]="form" class="form-container">
+
+        <input type="file" #fileInput style="visibility: hidden; height: 0" name="files[]" (change)="processWebImage($event)" accept="image/*" />
+        <div class="image-wrapper" (click)="getImage()">
+            <div class="image-placeholder" *ngIf="!this.form.controls.image.value">
+                <div class="text-block"> Product Image <br> (Max 500 KB) </div>
+            </div>
+            <img class="image" [style.backgroundImage]="getImageStyle()" *ngIf="this.form.controls.image.value" />
+        </div>
+
+        <mat-form-field>
+            <input type="text" matInput formControlName="firstName" placeholder="First Name" required />
+            <mat-error *ngIf="( form.get('firstName').hasError('required') ) && form.get('firstName').touched">
+                <span class="error" *ngIf="form.get('firstName').hasError('required') || form.get('firstName').touched">
+          You must enter a value
+        </span>
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <input type="text" matInput formControlName="lastName" placeholder="Last Name" required />
+            <mat-error *ngIf="( form.get('lastName').hasError('required') ) && form.get('lastName').touched">
+                <span class="error" *ngIf="form.get('lastName').hasError('required') || form.get('lastName').touched">
+          You must enter a value
+        </span>
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <input type="email" matInput formControlName="email" placeholder="Email" required />
+            <mat-error *ngIf="( form.get('email').hasError('required') ) && form.get('email').touched">
+                <span class="error" *ngIf="form.get('email').hasError('required') || form.get('email').touched">
+          You must enter a value
+        </span>
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <input type="number" matInput formControlName="contact" placeholder="Contact Number" required />
+            <mat-error *ngIf="( form.get('contact').hasError('required') ) && form.get('contact').touched">
+                <span class="error" *ngIf="form.get('contact').hasError('required') || form.get('contact').touched">
+          You must enter a value
+        </span>
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <input type="text" matInput formControlName="address" placeholder="Address" required />
+            <mat-error *ngIf="( form.get('address').hasError('required') ) && form.get('address').touched">
+                <span class="error" *ngIf="form.get('address').hasError('required') || form.get('address').touched">
+          You must enter a value
+        </span>
+            </mat-error>
+        </mat-form-field>
+    </form>
+</div>
+<div mat-dialog-actions class="button-row">
+    <button mat-stroked-button (click)="onNoClick()" cdkFocusInitial>No Thanks</button>
+    <button mat-stroked-button color="primary" *ngIf="!isDone" [disabled]="true">Wait ...</button>
+    <!-- <button mat-stroked-button color="primary" *ngIf="data.action == 'Add' && isDone" [disabled]="!isReadyToSave" (click)="add()">Add</button> -->
+    <button mat-stroked-button color="primary" [disabled]="!isReadyToSave" (click)="edit()">Update</button>
+</div>

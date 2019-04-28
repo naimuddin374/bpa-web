@@ -1,0 +1,86 @@
+<div style="text-align: right">
+    <button mat-raised-button color="primary" (click)="add()">
+    <mat-icon aria-label="icon">add</mat-icon> Add User
+  </button>
+</div>
+<br />
+
+<div class="mat-elevation-z8">
+    <div *ngIf="isLoading && !isEmpty">
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    </div>
+    <mat-card *ngIf="isEmpty" style="text-align: center">No data found!</mat-card>
+
+    <table mat-table [dataSource]="list" matSort class="mat-elevation-z8">
+        <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef> No. </th>
+            <td mat-cell *matCellDef="let e; let i = index;"> {{i + 1}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="empId">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Employee ID </th>
+            <td mat-cell *matCellDef="let e">
+                <div>{{e.code}}</div>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="full_name">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Full Name </th>
+            <td mat-cell *matCellDef="let e">
+                <div>{{e.first_name}} {{e.last_name}}</div>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="email">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
+            <td mat-cell *matCellDef="let e">
+                <div>{{e.email}}</div>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="department">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Department </th>
+            <td mat-cell *matCellDef="let e">
+                <div>{{e.department}}</div>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="supervisor">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Supervisor </th>
+            <td mat-cell *matCellDef="let e">
+                <div>{{e.supervisor_first_name}} {{e.supervisor_last_name}}</div>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="role">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Role </th>
+            <td mat-cell *matCellDef="let e">
+                <div>{{e.role}}</div>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+            <td mat-cell *matCellDef="let e">
+                <div *ngIf="e.status == '0'">Deactive</div>
+                <div *ngIf="e.status == '1'">Active</div>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="action">
+            <th mat-header-cell *matHeaderCellDef> Action </th>
+            <td mat-cell *matCellDef="let e">
+                <button mat-icon-button color="primary" (click)="edit(e)">
+          <mat-icon aria-label="icon">edit</mat-icon>
+        </button>
+                <button mat-icon-button color="warn" (click)="delete(e.id)">
+          <mat-icon aria-label="icon">delete</mat-icon>
+        </button>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <mat-paginator [pageSizeOptions]="[10, 20, 25]" showFirstLastButtons></mat-paginator>
+</div>

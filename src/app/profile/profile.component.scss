@@ -1,0 +1,30 @@
+.imageDiv {
+    margin: 10px auto;
+    float: left;
+}
+
+.container {
+    padding: 5%;
+}
+
+.text-hide {
+    white-space: nowrap;
+    width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.mat-card {
+    border-radius: 0;
+}
+
+.mat-grid-list {
+    text-align: left;
+}
+
+table {
+    margin: 0 auto;
+    td {
+        padding: 5px 20px;
+    }
+}
